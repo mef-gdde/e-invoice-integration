@@ -100,8 +100,9 @@ const _inlineRuntimeConfig = {
       }
     }
   },
-  "public": {},
-  "connectUrl": "http://sb-merchant.e-invoice.gov.kh/connect?client_id=a0585135d8837fd67c5e8362d6766f31&redirect_url=redirectUrl"
+  "public": {
+    "connectUrl": "http://sb-merchant.e-invoice.gov.kh/connect?client_id=a0585135d8837fd67c5e8362d6766f31&redirect_url=http://localhost:3000/authorize"
+  }
 };
 const envOptions = {
   prefix: "NITRO_",

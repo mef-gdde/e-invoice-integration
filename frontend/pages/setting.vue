@@ -6,6 +6,7 @@ onMounted(async () => {
     const result = await axios.get('/auth')
     company.value = result.data
 });
+const config = useRuntimeConfig()
 const disconnect = async () => {
     await axios.post('/auth/disconnect');
     company.value = '';
@@ -40,7 +41,7 @@ const disconnect = async () => {
             </div>
             
         </div>
-        <a v-if='company == ""' :href="url" type="button"
+        <a v-if='company == ""' :href="config.public.connectUrl" type="button"
             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
             Connect to caminv
         </a>
