@@ -1,0 +1,38 @@
+<cac:AccountingCustomerParty>
+  <cac:Party>
+    {{!-- <cbc:EndpointID {{!schemeID="0002" }}>{{customer.endpoint_id}}</cbc:EndpointID> --}}
+    {{#if customer.id}}
+    <cac:PartyIdentification>
+      <cbc:ID>{{customer.id}}</cbc:ID>
+    </cac:PartyIdentification>
+    {{/if}}
+    {{#if customer.party_legal_entity.registration_name_kh}}
+    <cac:PartyName>
+      <cbc:Name>{{customer.party_legal_entity.registration_name_kh}}</cbc:Name>
+    </cac:PartyName>
+    {{/if}}
+    <cac:PostalAddress>
+          <cac:Country>
+        <cbc:IdentificationCode>{{customer.postal_address.country_code}}</cbc:IdentificationCode>
+      </cac:Country>
+    </cac:PostalAddress>
+    <cac:PartyTaxScheme>
+      {{!Vatin Number}}
+      <cbc:CompanyID>{{customer.party_tax_scheme.company_id}}</cbc:CompanyID>
+      <cac:TaxScheme>
+        {{!VAT}}
+        <cbc:ID>{{customer.party_tax_scheme.tax_scheme}}</cbc:ID>
+      </cac:TaxScheme>
+    </cac:PartyTaxScheme>
+    <cac:PartyLegalEntity>
+      <cbc:RegistrationName languageID="en">{{customer.party_legal_entity.registration_name_en}}</cbc:RegistrationName>
+      <cbc:CompanyID>{{customer.party_legal_entity.company_id}}</cbc:CompanyID>
+    </cac:PartyLegalEntity>
+    {{#if customer.contact}}
+    <cac:Contact>
+      <cbc:Telephone>{{customer.contact.phone}}</cbc:Telephone>
+      <cbc:ElectronicMail>{{customer.contact.email}}</cbc:ElectronicMail>
+    </cac:Contact>
+    {{/if}}
+  </cac:Party>
+</cac:AccountingCustomerParty>
