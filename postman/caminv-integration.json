@@ -1,0 +1,711 @@
+{
+	"info": {
+		"_postman_id": "9c3a000b-3049-418c-8d52-6bc9c45a196d",
+		"name": "CAMINV-Integration-service-provider",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7020181"
+	},
+	"item": [
+		{
+			"name": "Authentication & Connection",
+			"item": [
+				{
+					"name": "Connect",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"auth_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2NfaWQiOiIwMzM0MjMiLCJzZXJ2aWNlX3Byb3ZpZGVyX2lkIjoiMjQyOTJhNTItNGMxYi00OGZlLTlmNDgtMDg5N2U4ZmQ1OWQ2IiwiaWF0IjoxNzE3NzM4NDk3LCJleHAiOjE3MTc4MjQ4OTd9.YKuK1CBcvLF5b9qQXDdirf1CZfVYu2yjvoLaGqVePNA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/authorize/connect",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"authorize",
+								"connect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authentication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json()",
+									"",
+									"pm.environment.set('access_token', response.access_token)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"refresh_token\": \"8ee27aaa754341222c3a1d4c6dbb743479cf1949da7df1d35ce8369d20f6bbec\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{client_secret}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{client_id}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Configuration",
+			"item": [
+				{
+					"name": "Configure webhook",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"webhook_url\": \"https://a2b0-175-100-53-228.ngrok-free.app/webhook/invoice-received\"\n//    \"moc_id\": \"033423\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/configure/configure-webhook",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"configure",
+								"configure-webhook"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Configure redirect url",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"white_list_redirect_urls\": [\n    \"http://localhost:3000\"\n]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/configure/configure-redirect-url",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"configure",
+								"configure-redirect-url"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{client_secret}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{client_id}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Caminv Business",
+			"item": [
+				{
+					"name": "Business list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/business/?limit=10&keyword",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"business",
+								""
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "keyword",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Business Info",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2NfaWQiOiIxMDEwMDE2MTI4Iiwic2VydmljZV9wcm92aWRlcl9pZCI6IjEzYWVlZDRkLTk1NDAtNDEzZC05MzZhLTdmOGI0YzdhZjBmNiIsImV4cGlyZV9pbiI6IjEgaG91ciIsImlhdCI6MTcxNjczMzg5MywiZXhwIjoxNzE2NzM3NDkzfQ.FJKJodclYJbwiMZFi32ElI_uexJaXHv9576ZiMldDHc\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/business/:moc_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"business",
+								":moc_id"
+							],
+							"variable": [
+								{
+									"key": "moc_id",
+									"value": "890758849"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Business",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"single_id\": \"testing\",\n        \"company_name_en\": \"testing\",\n        \"company_name_kh\": \"testing\",\n        \"tin\": \"testing\",\n        \"id\": \"testing\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/business/validate",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"business",
+								"validate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Documents (Invoice, Credit/Debnit Note)",
+			"item": [
+				{
+					"name": "Submit Document",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"documents\": [\n        {\n            \"document_type\": \"INVOICE\",\n            \"document\": \"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPEludm9pY2UgeG1sbnM6Y2FjPSJ1cm46b2FzaXM6bmFtZXM6c3BlY2lmaWNhdGlvbjp1Ymw6c2NoZW1hOnhzZDpDb21tb25BZ2dyZWdhdGVDb21wb25lbnRzLTIiCiAgeG1sbnM6Y2JjPSJ1cm46b2FzaXM6bmFtZXM6c3BlY2lmaWNhdGlvbjp1Ymw6c2NoZW1hOnhzZDpDb21tb25CYXNpY0NvbXBvbmVudHMtMiIKICB4bWxucz0idXJuOm9hc2lzOm5hbWVzOnNwZWNpZmljYXRpb246dWJsOnNjaGVtYTp4c2Q6SW52b2ljZS0yIj4KICA8Y2JjOlVCTFZlcnNpb25JRD4yLjE8L2NiYzpVQkxWZXJzaW9uSUQ+CiAgPGNiYzpJRD5JTlYtMDAyPC9jYmM6SUQ+CiAgPGNiYzpJc3N1ZURhdGU+MjAyNC0wNi0wNzwvY2JjOklzc3VlRGF0ZT4KICA8Y2JjOkR1ZURhdGU+MjAyNC0wNi0yODwvY2JjOkR1ZURhdGU+CgogIDxjYmM6SW52b2ljZVR5cGVDb2RlIGxpc3RJRD0iVU4vRUNFIDEwMDEgU3Vic2V0Ij4zODg8L2NiYzpJbnZvaWNlVHlwZUNvZGU+CiAgPGNiYzpEb2N1bWVudEN1cnJlbmN5Q29kZT5LSFI8L2NiYzpEb2N1bWVudEN1cnJlbmN5Q29kZT4KICAKICA8Y2FjOkFjY291bnRpbmdTdXBwbGllclBhcnR5PgogICAgPGNhYzpQYXJ0eT4KICAgICAgPGNhYzpQYXJ0eU5hbWU+CiAgICAgICAgPGNiYzpOYW1lPuGeouGeu+Get+GeheGen+GelOGfkuGemuGfgeGen+GevDwvY2JjOk5hbWU+CiAgICAgIDwvY2FjOlBhcnR5TmFtZT4KICAgICAgPGNhYzpQb3N0YWxBZGRyZXNzPgogICAgICAgIDxjYmM6U3RyZWV0TmFtZT5QaG5vbSBQZW5oPC9jYmM6U3RyZWV0TmFtZT4KICAgICAgICA8Y2JjOkNpdHlOYW1lPlBobm9tIFBlbmg8L2NiYzpDaXR5TmFtZT4KICAgICAgICA8Y2FjOkNvdW50cnk+CiAgICAgICAgICA8Y2JjOklkZW50aWZpY2F0aW9uQ29kZT5LSDwvY2JjOklkZW50aWZpY2F0aW9uQ29kZT4KICAgICAgICA8L2NhYzpDb3VudHJ5PgogICAgICA8L2NhYzpQb3N0YWxBZGRyZXNzPgogICAgICA8Y2FjOlBhcnR5VGF4U2NoZW1lPgogICAgICAgIDxjYmM6Q29tcGFueUlEPkswMDEtMzMzMzMzMzwvY2JjOkNvbXBhbnlJRD4KICAgICAgICA8Y2FjOlRheFNjaGVtZT4KICAgICAgICAgIDxjYmM6SUQ+VkFUPC9jYmM6SUQ+CiAgICAgICAgPC9jYWM6VGF4U2NoZW1lPgogICAgICA8L2NhYzpQYXJ0eVRheFNjaGVtZT4KICAgICAgPGNhYzpQYXJ0eUxlZ2FsRW50aXR5PgogICAgICAgIDxjYmM6UmVnaXN0cmF0aW9uTmFtZT5FeHByZXNzbyBDbyBsdGQ8L2NiYzpSZWdpc3RyYXRpb25OYW1lPgogICAgICAgIDxjYmM6Q29tcGFueUlEPjAzMzQyMzwvY2JjOkNvbXBhbnlJRD4KICAgICAgPC9jYWM6UGFydHlMZWdhbEVudGl0eT4KICAgICAgPGNhYzpDb250YWN0PgogICAgICAgIDxjYmM6VGVsZXBob25lPis4NTU0NDQzMzQyMjwvY2JjOlRlbGVwaG9uZT4KICAgICAgICA8Y2JjOkVsZWN0cm9uaWNNYWlsPnBoZW5wYW5pQGdtYWlsLmNvbTwvY2JjOkVsZWN0cm9uaWNNYWlsPgogICAgICA8L2NhYzpDb250YWN0PgogICAgPC9jYWM6UGFydHk+CiAgPC9jYWM6QWNjb3VudGluZ1N1cHBsaWVyUGFydHk+ICA8Y2FjOkFjY291bnRpbmdDdXN0b21lclBhcnR5PgogICAgPGNhYzpQYXJ0eT4KICAgICAgPGNhYzpQYXJ0eU5hbWU+CiAgICAgICAgPGNiYzpOYW1lPlBoYW5leTwvY2JjOk5hbWU+CiAgICAgIDwvY2FjOlBhcnR5TmFtZT4KICAgICAgPGNhYzpQb3N0YWxBZGRyZXNzPgogICAgICAKICAgICAgICA8Y2JjOlN0cmVldE5hbWU+UGhub20gUGVuaDwvY2JjOlN0cmVldE5hbWU+CiAgICAgICAgPGNiYzpDaXR5TmFtZT5CYW50ZWF5IE1lYW5jaGV5PC9jYmM6Q2l0eU5hbWU+CiAgICAgICAgPGNhYzpDb3VudHJ5PgogICAgICAgICAgPGNiYzpJZGVudGlmaWNhdGlvbkNvZGU+S0g8L2NiYzpJZGVudGlmaWNhdGlvbkNvZGU+CiAgICAgICAgPC9jYWM6Q291bnRyeT4KICAgICAgPC9jYWM6UG9zdGFsQWRkcmVzcz4KICAgICAgPGNhYzpQYXJ0eVRheFNjaGVtZT4KICAgICAgICA8Y2JjOkNvbXBhbnlJRD5QaGFuZXk8L2NiYzpDb21wYW55SUQ+CiAgICAgICAgPGNhYzpUYXhTY2hlbWU+CiAgICAgICAgICA8Y2JjOklEPlZBVDwvY2JjOklEPgogICAgICAgIDwvY2FjOlRheFNjaGVtZT4KICAgICAgPC9jYWM6UGFydHlUYXhTY2hlbWU+CiAgICAgIDxjYWM6UGFydHlMZWdhbEVudGl0eT4KICAgICAgICA8Y2JjOlJlZ2lzdHJhdGlvbk5hbWUgbGFuZ3VhZ2VJRD0iZW4iPlBoYW5leTE8L2NiYzpSZWdpc3RyYXRpb25OYW1lPgogICAgICAgIDxjYmM6Q29tcGFueUlEPlBoYW5leTwvY2JjOkNvbXBhbnlJRD4KICAgICAgPC9jYWM6UGFydHlMZWdhbEVudGl0eT4KICAgICAgPGNhYzpDb250YWN0PgogICAgICAgIDxjYmM6VGVsZXBob25lPis4NTU0NDMyNDMyMzM8L2NiYzpUZWxlcGhvbmU+CiAgICAgICAgPGNiYzpFbGVjdHJvbmljTWFpbD5waGVucGFuaUBnbWFpbC5jb208L2NiYzpFbGVjdHJvbmljTWFpbD4KICAgICAgPC9jYWM6Q29udGFjdD4KICAgIDwvY2FjOlBhcnR5PgogIDwvY2FjOkFjY291bnRpbmdDdXN0b21lclBhcnR5PiAgPGNhYzpQcmVwYWlkUGF5bWVudD4KICAgICAgPGNiYzpQYWlkQW1vdW50IGN1cnJlbmN5SUQ9IktIUiI+MDwvY2JjOlBhaWRBbW91bnQ+CiAgPC9jYWM6UHJlcGFpZFBheW1lbnQ+CiAgPGNhYzpUYXhUb3RhbD4KICAgICAgPGNiYzpUYXhBbW91bnQgY3VycmVuY3lJRD0iS0hSIj4xMDwvY2JjOlRheEFtb3VudD4KICAgICAgPGNhYzpUYXhTdWJ0b3RhbD4KICAgICAgICAgIDxjYmM6VGF4YWJsZUFtb3VudCBjdXJyZW5jeUlEPSJLSFIiPjEwMDwvY2JjOlRheGFibGVBbW91bnQ+CiAgICAgICAgPGNiYzpUYXhBbW91bnQgY3VycmVuY3lJRD0iS0hSIj4xMDwvY2JjOlRheEFtb3VudD4KICAgICAgICA8Y2FjOlRheENhdGVnb3J5PgogICAgICAgICAgPGNiYzpJRD5TPC9jYmM6SUQ+CiAgICAgICAgICA8Y2JjOlBlcmNlbnQ+MTA8L2NiYzpQZXJjZW50PgogICAgICAgICAgPGNhYzpUYXhTY2hlbWU+CiAgICAgICAgICAgIDxjYmM6SUQ+VkFUPC9jYmM6SUQ+CiAgICAgICAgICA8L2NhYzpUYXhTY2hlbWU+CiAgICAgICAgPC9jYWM6VGF4Q2F0ZWdvcnk+CiAgICAgIDwvY2FjOlRheFN1YnRvdGFsPgogICAgPC9jYWM6VGF4VG90YWw+ICA8Y2FjOkxlZ2FsTW9uZXRhcnlUb3RhbD4KICAgIDxjYmM6TGluZUV4dGVuc2lvbkFtb3VudCBjdXJyZW5jeUlEPSJLSFIiPjEwMAogICAgPC9jYmM6TGluZUV4dGVuc2lvbkFtb3VudD4KICAgIDxjYmM6VGF4RXhjbHVzaXZlQW1vdW50IGN1cnJlbmN5SUQ9IktIUiI+MTAwCiAgICA8L2NiYzpUYXhFeGNsdXNpdmVBbW91bnQ+CiAgICA8Y2JjOlRheEluY2x1c2l2ZUFtb3VudCBjdXJyZW5jeUlEPSJLSFIiPjExMAogICAgPC9jYmM6VGF4SW5jbHVzaXZlQW1vdW50PgogICAgPGNiYzpQYXlhYmxlQW1vdW50IGN1cnJlbmN5SUQ9IktIUiI+MTEwPC9jYmM6UGF5YWJsZUFtb3VudD4KICA8L2NhYzpMZWdhbE1vbmV0YXJ5VG90YWw+CiAgPGNhYzpJbnZvaWNlTGluZT4KICAgIDxjYmM6SUQ+MTwvY2JjOklEPgogICAgPGNiYzpJbnZvaWNlZFF1YW50aXR5IHVuaXRDb2RlPSJub25lIj4xPC9jYmM6SW52b2ljZWRRdWFudGl0eT4KICAgIDxjYmM6TGluZUV4dGVuc2lvbkFtb3VudCBjdXJyZW5jeUlEPSJLSFIiPjEwMDwvY2JjOkxpbmVFeHRlbnNpb25BbW91bnQ+CiAgICA8Y2FjOlRheFRvdGFsPgogICAgICAgIDxjYmM6VGF4QW1vdW50IGN1cnJlbmN5SUQ9IktIUiI+MTA8L2NiYzpUYXhBbW91bnQ+CiAgICAgICAgPGNhYzpUYXhTdWJ0b3RhbD4KICAgICAgICAgIDxjYmM6VGF4QW1vdW50IGN1cnJlbmN5SUQ9IktIUiI+MTA8L2NiYzpUYXhBbW91bnQ+CiAgICAgICAgICA8Y2FjOlRheENhdGVnb3J5PgogICAgICAgICAgICA8Y2JjOklEPlM8L2NiYzpJRD4KICAgICAgICAgICAgPGNiYzpQZXJjZW50PjEwPC9jYmM6UGVyY2VudD4KICAgICAgICAgICAgPGNhYzpUYXhTY2hlbWU+CiAgICAgICAgICAgICAgPGNiYzpJRD5WQVQ8L2NiYzpJRD4KICAgICAgICAgICAgPC9jYWM6VGF4U2NoZW1lPgogICAgICAgICAgPC9jYWM6VGF4Q2F0ZWdvcnk+CiAgICAgICAgPC9jYWM6VGF4U3VidG90YWw+CiAgICAgIDwvY2FjOlRheFRvdGFsPgogICAgPGNhYzpJdGVtPgogICAgICA8Y2JjOkRlc2NyaXB0aW9uPml0ZW0xPC9jYmM6RGVzY3JpcHRpb24+CiAgCiAgICAgIDxjYmM6TmFtZT5pdGVtMTwvY2JjOk5hbWU+CiAgCiAgICA8L2NhYzpJdGVtPgogICAgPGNhYzpQcmljZT4KICAgICAgPGNiYzpQcmljZUFtb3VudCBjdXJyZW5jeUlEPSJLSFIiPjEwMDwvY2JjOlByaWNlQW1vdW50PgogICAgPC9jYWM6UHJpY2U+CiAgPC9jYWM6SW52b2ljZUxpbmU+CjwvSW52b2ljZT4=\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/document",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Document Info",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/document/715c45bf-62ea-4ee6-8754-6c5b3870cfb0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"715c45bf-62ea-4ee6-8754-6c5b3870cfb0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Poll Request",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/document/poll?last_synced_at=2024-03-01",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"poll"
+							],
+							"query": [
+								{
+									"key": "last_synced_at",
+									"value": "2024-03-01"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Document list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/document?type=received&document_type=INVOICE",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "received",
+									"description": "value 'received' or 'sent'"
+								},
+								{
+									"key": "document_type",
+									"value": "INVOICE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept Document",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"documents\": [\n        \"c99fc049-801e-4974-9548-7de351299136\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/document/accept",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"accept"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Document",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"documents\": [\n        \"285064fd-b7fd-4392-bb67-0a69706cc39c\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/document/reject",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"reject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pdf Document",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"documents\": [\n        \"285064fd-b7fd-4392-bb67-0a69706cc39c\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/document/715c45bf-62ea-4ee6-8754-6c5b3870cfb0/pdf",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"715c45bf-62ea-4ee6-8754-6c5b3870cfb0",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET XML document",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"documents\": [\n        \"285064fd-b7fd-4392-bb67-0a69706cc39c\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/document/715c45bf-62ea-4ee6-8754-6c5b3870cfb0/xml",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"715c45bf-62ea-4ee6-8754-6c5b3870cfb0",
+								"xml"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{access_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://sb-merchant.e-invoicegov.kh",
+			"type": "string"
+		}
+	]
+}
