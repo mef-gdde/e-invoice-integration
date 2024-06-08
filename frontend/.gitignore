@@ -1,6 +1,7 @@
 # compiled output
 /dist
 /build
+/.nuxt
 /node_modules
 
 # Logs
