@@ -1,0 +1,48 @@
+version: '3.8'
+services:
+  postgresdb:
+    image: postgres:latest
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "54321:5432"
+    environment:
+      POSTGRES_DB: testing_integration
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+      - ./backend/src/views:/app/build/src/views
+    ports:
+      - "3011:3011"
+    environment:
+      DB_HOST: postgresdb
+      DB_NAME: testing_integration
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres123
+      DB_PORT: 5432
+      JWT_SECRET: Iamsecret
+      PORT: 3011
+      INVOICE_API_URL: https://sb-merchant.e-invoice.gov.kh/api/v1
+      CLIENT_ID: a0585135d8837fd67c5e8362d6766f31
+      CLIENT_SECRET: 79bbd65e3253a556faeba9002cf5b70960622836060eee8fd54a2e639a0630ae
+    command: npm run start:dev
+    depends_on:
+      - postgresdb
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    command: npx nuxt dev
+    environment:
+      NUXT_ENV_BACKEND_URL: http://localhost:3011
+      PORT: "3000"
+
+volumes:
+  db-data:
