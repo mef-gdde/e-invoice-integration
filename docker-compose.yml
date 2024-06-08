@@ -26,9 +26,8 @@ services:
       DB_PORT: 5432
       JWT_SECRET: Iamsecret
       PORT: 3011
-      INVOICE_API_URL: https://sb-merchant.e-invoice.gov.kh/api/v1
-      CLIENT_ID: a0585135d8837fd67c5e8362d6766f31
-      CLIENT_SECRET: 79bbd65e3253a556faeba9002cf5b70960622836060eee8fd54a2e639a0630ae
+    env_file:
+      - .env
     command: npm run start:dev
     depends_on:
       - postgresdb
