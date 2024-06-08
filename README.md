@@ -1,5 +1,7 @@
 # Getting Start
-Copy your client id, client secret to environment in ```docker-compose.yml`
-in fronend folder/nuxt.config.ts make change url client id
+in frontend folder/nuxt.config.ts make change url client id
 and run
-```docker-compose up -d --build```
+```
+cp .env.example .env 
+docker-compose up -d --build
+```
